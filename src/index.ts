@@ -17,7 +17,7 @@ const server = new ApolloServer({
 const app = express();
 app.use(cors());
 
-server.applyMiddleware({ app, path: '/api' });
+server.applyMiddleware({ app });
 
 const port = process.env.PORT || 4000;
 
