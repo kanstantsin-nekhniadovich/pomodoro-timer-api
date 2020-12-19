@@ -8,6 +8,6 @@ export type UserArguments = {
 
 export type CreateUserArguments = {
   data: UserCreateInput;
-}
+};
 
 export type UpdateUserArguments = ParamsType<Prisma['updateUser']>;

@@ -7,5 +7,5 @@ export const resolvers = {
   },
   Mutation: {
     ...UserMutation,
-  }
+  },
 };

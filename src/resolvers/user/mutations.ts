@@ -31,5 +31,5 @@ export const Mutation = {
   },
   deleteUser: (_parent: Unrestricted, args: UserArguments, { prisma }: Context): Promise<Nullable<User>> => {
     return prisma.deleteUser(args.where);
-  }
-}
+  },
+};
