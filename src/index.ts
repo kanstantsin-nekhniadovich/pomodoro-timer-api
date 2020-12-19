@@ -12,12 +12,13 @@ const server = new ApolloServer({
     prisma,
     request,
   }),
+  playground: true,
 });
 
 const app = express();
 app.use(cors());
 
-server.applyMiddleware({ app });
+server.applyMiddleware({ app, path: '/api' });
 
 const port = process.env.PORT || 4000;
 
