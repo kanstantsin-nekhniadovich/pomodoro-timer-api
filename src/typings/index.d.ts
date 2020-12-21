@@ -1,5 +1,7 @@
 import { Prisma } from 'prisma-client';
 export * from './user';
+export * from './project';
+export * from './task';
 
 declare global {
   export type Unrestricted = any; // tslint:disable-line: no-any

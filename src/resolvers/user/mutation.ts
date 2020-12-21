@@ -1,9 +1,9 @@
 import { User } from 'prisma-client';
-import { CreateUserArguments, UpdateUserArguments, UserArguments } from '@typings';
+import { UsersMutation } from '@typings';
 import { hashPassword } from '../../utils/hashPassword';
 
 export const Mutation = {
-  createUser: async (_parent: Unrestricted, args: CreateUserArguments, { prisma }: Context): Promise<Nullable<User>> => {
+  createUser: async (_parent: unknown, args: UsersMutation.CreateUser, { prisma }: Context): Promise<Nullable<User>> => {
     const { email, password } = args.data;
     const userExists = await prisma.$exists.user({ email });
 
@@ -15,7 +15,7 @@ export const Mutation = {
 
     return prisma.createUser({ ...args.data, password: hashedPassword });
   },
-  updateUser: async (_parent: Unrestricted, args: UpdateUserArguments, { prisma }: Context): Promise<Nullable<User>> => {
+  updateUser: async (_parent: unknown, args: UsersMutation.UpdateUser, { prisma }: Context): Promise<Nullable<User>> => {
     const { data, where } = args;
     const userExists = await prisma.$exists.user({ email: data.email });
 
@@ -29,7 +29,7 @@ export const Mutation = {
 
     return prisma.updateUser({ data, where });
   },
-  deleteUser: (_parent: Unrestricted, args: UserArguments, { prisma }: Context): Promise<Nullable<User>> => {
+  deleteUser: (_parent: unknown, args: UsersMutation.DeleteUser, { prisma }: Context): Promise<Nullable<User>> => {
     return prisma.deleteUser(args.where);
   },
 };

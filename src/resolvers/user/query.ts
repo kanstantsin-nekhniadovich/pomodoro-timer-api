@@ -1,11 +1,8 @@
 import { User } from 'prisma-client';
-import { UsersArguments, UserArguments } from '@typings';
+import { UserQuery } from '@typings';
 
 export const Query = {
-  users: (_parent: Unrestricted, args: UsersArguments, { prisma }: Context): Promise<User[]> => {
-    return prisma.users(args);
-  },
-  user: (_parent: Unrestricted, args: UserArguments, { prisma }: Context): Promise<Nullable<User>> => {
+  user: (_parent: unknown, args: UserQuery.User, { prisma }: Context): Promise<Nullable<User>> => {
     return prisma.user(args.where);
   },
 };
