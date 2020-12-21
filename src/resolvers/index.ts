@@ -8,7 +8,7 @@ import { Project } from './project/relations';
 
 import { Query as TaskQuery } from './task/query';
 import { Mutation as TaskMutation } from './task/mutation';
-import { Task } from './task/relations'
+import { Task } from './task/relations';
 
 export const resolvers = {
   Query: {

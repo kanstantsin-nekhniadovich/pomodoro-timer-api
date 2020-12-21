@@ -6,5 +6,5 @@ export const Project = {
   },
   tasks: (parent: ProjectType, _args: unknown, { prisma }: Context): Promise<Task[]> => {
     return prisma.project({ id: parent.id }).tasks();
-  }
-}
+  },
+};
