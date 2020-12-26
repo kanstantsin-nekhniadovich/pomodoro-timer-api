@@ -1,6 +1,18 @@
-import { Prisma, UserUpdateInput, User } from 'prisma-client';
+import { User } from 'prisma-client';
 
 export type User = User;
+
+export namespace Auth {
+  export type Payload = {
+    user: User;
+    token: string;
+  };
+
+  export type Login = {
+    email: string;
+    password: string;
+  };
+}
 
 export namespace User {
   export namespace Mutation {

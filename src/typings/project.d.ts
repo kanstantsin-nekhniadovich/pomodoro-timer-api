@@ -15,7 +15,7 @@ export namespace Project {
   }
 
   export namespace Mutation {
-    export type Payload = {
+    type Payload = {
       title?: string;
       status?: Status;
       note?: string;

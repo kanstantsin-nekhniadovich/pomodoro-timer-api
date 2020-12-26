@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { resolvers } from './resolvers';
 import cors from 'cors';
@@ -8,9 +8,9 @@ import { typeDefs } from './schema.graphql';
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: request => ({
+  context: ({ req }: { req: Request }) => ({
     prisma,
-    request,
+    request: req,
   }),
   playground: true,
 });
@@ -18,7 +18,7 @@ const server = new ApolloServer({
 const app = express();
 app.use(cors());
 
-server.applyMiddleware({ app, path: '/api' });
+server.applyMiddleware({ app, path: process.env.GRAPHQL_PATH });
 
 const port = process.env.PORT || 4000;
 

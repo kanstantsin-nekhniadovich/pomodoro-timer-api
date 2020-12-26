@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { Prisma, Status } from 'prisma-client';
 export * from './user';
 export * from './project';
@@ -12,7 +13,7 @@ declare global {
 
   export type Context = {
     prisma: Prisma;
-    request: Unrestricted;
+    request: Request;
   };
 
   export type Status = Status;
@@ -20,4 +21,14 @@ declare global {
   export type UniqueIdPayload = {
     id: string;
   };
+
+  namespace NodeJS {
+    interface ProcessEnv {
+      PRISMA_ENDPOINT: string;
+      PRISMA_SECRET: string;
+      JWT_SECRET: string;
+      PORT: number;
+      GRAPHQL_PATH: string;
+    }
+  }
 }
