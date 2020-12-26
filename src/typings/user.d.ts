@@ -1,19 +1,23 @@
-import { Prisma, UserWhereUniqueInput, UserCreateInput, UserUpdateInput } from 'prisma-client';
+import { Prisma, UserUpdateInput, User } from 'prisma-client';
 
-export namespace UserQuery {
-  export type User = {
-    where: UserWhereUniqueInput;
-  };
-}
+export type User = User;
 
-export namespace UsersMutation {
-  export type CreateUser = {
-    data: UserCreateInput;
-  };
+export namespace User {
+  export namespace Mutation {
 
-  export type UpdateUser = ParamsType<Prisma['updateUser']>;
+    type Payload = {
+      name?: string;
+      email?: string;
+      password?: string;
+      avatarUrl?: string;
+    };
 
-  export type DeleteUser = {
-    where: UserWhereUniqueInput;
-  };
+    export type CreateUser = {
+      data: Required<Payload> & { avatarUrl?: string };
+    };
+
+    export type UpdateUser = {
+      data: Payload;
+    };
+  }
 }

@@ -1,8 +1,7 @@
-import { User } from 'prisma-client';
-import { UserQuery } from '@typings';
+import { User } from '@typings';
 
 export const Query = {
-  user: (_parent: unknown, args: UserQuery.User, { prisma }: Context): Promise<Nullable<User>> => {
-    return prisma.user(args.where);
+  user: (_parent: unknown, _args: unknown, { prisma }: Context): Promise<Nullable<User>> => {
+    return prisma.user({}); // TODO implement jwt token logic
   },
 };

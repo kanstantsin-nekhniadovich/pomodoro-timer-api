@@ -1,4 +1,4 @@
-import { Project, User as UserType } from 'prisma-client';
+import { Project, User as UserType } from '@typings';
 
 export const User = {
   projects: (parent: UserType, _args: unknown, { prisma }: Context): Promise<Project[]> => {

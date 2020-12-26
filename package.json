@@ -8,12 +8,12 @@
     "start": "node dist/index.js",
     "heroku-postbuild": "rm -rf dist && tsc",
     "lint": "tslint 'src/**/*.ts' --project tsconfig.json --fix --format stylish",
-    "prepush": "npm run lint",
+    "precommit": "npm run lint",
     "test": "jest"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run prepush"
+      "pre-commit": "npm run precommit"
     }
   },
   "author": "Konstantyn Niechniedowicz",

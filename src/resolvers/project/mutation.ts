@@ -1,14 +1,19 @@
-import { Project } from 'prisma-client';
-import { ProjectMutation } from '@typings';
+import { Project } from '@typings';
 
 export const Mutation = {
-  createProject: (_parent: unknown, args: ProjectMutation.CreateProject, { prisma }: Context): Promise<Project> => {
-    return prisma.createProject(args.data);
+  createProject: (_parent: unknown, args: Project.Mutation.CreateProject, { prisma }: Context): Promise<Project> => {
+    const owner = {
+      connect: {
+        id: '', // TODO implement jwt token logic
+      },
+    };
+
+    return prisma.createProject({ ...args.data, owner });
   },
-  updateProject: (_parent: unknown, args: ProjectMutation.UpdateProject, { prisma }: Context): Promise<Project> => {
+  updateProject: (_parent: unknown, args: Project.Mutation.UpdateProject, { prisma }: Context): Promise<Project> => {
     return prisma.updateProject(args);
   },
-  deleteProject: (_parent: unknown, args: ProjectMutation.DeleteProject, { prisma }: Context): Promise<Project> => {
-    return prisma.deleteProject(args.where);
+  deleteProject: (_parent: unknown, args: UniqueIdPayload, { prisma }: Context): Promise<Project> => {
+    return prisma.deleteProject(args);
   },
 };

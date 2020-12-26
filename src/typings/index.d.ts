@@ -1,4 +1,4 @@
-import { Prisma } from 'prisma-client';
+import { Prisma, Status } from 'prisma-client';
 export * from './user';
 export * from './project';
 export * from './task';
@@ -13,5 +13,11 @@ declare global {
   export type Context = {
     prisma: Prisma;
     request: Unrestricted;
+  };
+
+  export type Status = Status;
+
+  export type UniqueIdPayload = {
+    id: string;
   };
 }

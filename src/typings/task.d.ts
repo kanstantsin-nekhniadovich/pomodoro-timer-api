@@ -1,21 +1,41 @@
-import { Prisma, TaskWhereUniqueInput, TaskCreateInput } from 'prisma-client';
+import { Prisma, TaskWhereUniqueInput, TaskCreateInput, Task } from 'prisma-client';
 
-export namespace TaskQuery {
-  export type Tasks = ParamsType<Prisma['tasks']>;
+export type Task = Task;
 
-  export type Task = {
-    where: TaskWhereUniqueInput;
+export namespace Task {
+  export namespace Query {
+    export type Tasks = {
+      query?: string;
+      skip?: number;
+      after?: string;
+      before?: string;
+      first?: number;
+      last?: number;
+    };
+  }
+
+  type Payload = {
+    title?: string;
+    cyclesCount?: number;
+    workTime?: number;
+    breakTime?: number;
+    status?: Status;
+    remainingTime?: number;
+    currentCycle?: number;
   };
-}
 
-export namespace TaskMutation {
-  export type CreateTask = {
-    data: TaskCreateInput;
+  type ConnectTaskToProject = {
+    connect: UniqueIdPayload;
   };
 
-  export type UpdateTask = ParamsType<Prisma['updateTask']>;
+  export namespace Mutation {
+    export type CreateTask = {
+      data: Required<Payload> & { project: ConnectTaskToProject };
+    };
 
-  export type DeleteTask = {
-    where: TaskWhereUniqueInput;
-  };
+    export type UpdateTask = {
+      data: Payload;
+      where: UniqueIdPayload;
+    };
+  }
 }

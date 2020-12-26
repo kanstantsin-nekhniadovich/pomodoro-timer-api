@@ -1,20 +1,33 @@
-import { Prisma, ProjectCreateInput, ProjectWhereUniqueInput } from 'prisma-client';
+import { Project } from 'prisma-client';
 
-export namespace ProjectQuery {
-  export type Project = {
-    where: ProjectWhereUniqueInput;
-  };
+export type Project = Project;
 
-  export type Projects = ParamsType<Prisma['projects']>;
-}
+export namespace Project {
+  export namespace Query {
+    export type Projects = {
+      query?: string;
+      skip?: number;
+      after?: string;
+      before?: string;
+      first?: number;
+      last?: number;
+    };
+  }
 
-export namespace ProjectMutation {
-  export type CreateProject = {
-    data: ProjectCreateInput;
-  };
+  export namespace Mutation {
+    export type Payload = {
+      title?: string;
+      status?: Status;
+      note?: string;
+    };
 
-  export type UpdateProject = ParamsType<Prisma['updateProject']>;
-  export type DeleteProject = {
-    where: ProjectWhereUniqueInput;
-  };
+    export type CreateProject = {
+      data: Required<Payload>;
+    };
+
+    export type UpdateProject = {
+      data: Payload;
+      where: UniqueIdPayload;
+    };
+  }
 }

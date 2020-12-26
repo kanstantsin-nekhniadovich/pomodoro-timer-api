@@ -1,9 +1,9 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import { typeDefs } from './prisma-client/prisma-schema';
 import { resolvers } from './resolvers';
 import cors from 'cors';
 import { prisma } from './prisma-client';
+import { typeDefs } from './schema.graphql';
 
 const server = new ApolloServer({
   typeDefs,
