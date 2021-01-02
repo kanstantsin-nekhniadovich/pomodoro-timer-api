@@ -4,6 +4,7 @@ import { resolvers } from './resolvers';
 import cors from 'cors';
 import { prisma } from './prisma-client';
 import { typeDefs } from './schema.graphql';
+import './firebase';
 
 const server = new ApolloServer({
   typeDefs,

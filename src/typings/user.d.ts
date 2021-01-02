@@ -6,6 +6,7 @@ export namespace Auth {
   export type Payload = {
     user: User;
     token: string;
+    firebaseToken: string;
   };
 
   export type Login = {
