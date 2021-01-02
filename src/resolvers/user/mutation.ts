@@ -4,6 +4,7 @@ import { hashPassword } from '../../utils/hashPassword';
 import { generateToken } from '../../utils/generateToken';
 import { isDefined } from '../../utils/isDefined';
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
+import { auth } from 'firebase-admin';
 
 export const Mutation = {
   createUser: async (_parent: unknown, args: User.Mutation.CreateUser, { prisma }: Context): Promise<Auth.Payload> => {
@@ -20,6 +21,7 @@ export const Mutation = {
     return {
       user,
       token: await generateToken(user.id),
+      firebaseToken: await auth().createCustomToken(user.id),
     };
   },
   updateUser: async (_parent: unknown, args: User.Mutation.UpdateUser, { prisma, request }: Context): Promise<Nullable<User>> => {
@@ -60,6 +62,7 @@ export const Mutation = {
     return {
       user,
       token: await generateToken(user.id),
+      firebaseToken: await auth().createCustomToken(user.id),
     };
   },
 };
