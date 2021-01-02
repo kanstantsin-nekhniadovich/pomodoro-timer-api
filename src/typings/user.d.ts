@@ -12,24 +12,26 @@ export namespace Auth {
     email: string;
     password: string;
   };
+
+  export type SignUp = {
+    data: {
+      name: string;
+      email: string;
+      password: string;
+      avatarUrl?: string;
+    };
+  };
 }
 
 export namespace User {
   export namespace Mutation {
-
-    type Payload = {
-      name?: string;
-      email?: string;
-      password?: string;
-      avatarUrl?: string;
-    };
-
-    export type CreateUser = {
-      data: Required<Payload> & { avatarUrl?: string };
-    };
-
     export type UpdateUser = {
-      data: Payload;
+      data: {
+        name?: string;
+        email?: string;
+        password?: string;
+        avatarUrl?: string;
+      };
     };
   }
 }

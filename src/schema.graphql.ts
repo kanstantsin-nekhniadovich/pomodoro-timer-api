@@ -10,10 +10,11 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createUser(data: CreateUserInput!): AuthPayload!
+    signUp(data: SignUpInput!): AuthPayload!
     updateUser(data: UpdateUserInput!): User!
     deleteUser: User!
     login(email: String!, password: String!): AuthPayload!
+    logout: Void
     createTask(data: CreateTaskInput!): Task!
     updateTask(data: UpdateTaskInput!, where: UniqueIdInput!): Task!
     deleteTask(id: ID!): Task!
@@ -22,7 +23,7 @@ export const typeDefs = gql`
     deleteProject(id: ID!): Project!
   }
 
-  input CreateUserInput {
+  input SignUpInput {
     name: String!
     email: String!
     password: String!
@@ -121,4 +122,6 @@ export const typeDefs = gql`
     INPROGRESS
     COMPLETED
   }
+
+  scalar Void
 `;

@@ -1,12 +1,11 @@
 import { User, Auth } from '@typings';
-import bcrypt from 'bcryptjs';
 import { hashPassword } from '../../utils/hashPassword';
 import { generateToken } from '../../utils/generateToken';
 import { isDefined } from '../../utils/isDefined';
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
 
 export const Mutation = {
-  createUser: async (_parent: unknown, args: User.Mutation.CreateUser, { prisma }: Context): Promise<Auth.Payload> => {
+  signUp: async (_parent: unknown, args: Auth.SignUp, { prisma, passportCtx }: Context): Promise<Auth.Payload> => {
     const { email, password } = args.data;
     const userExists = await prisma.$exists.user({ email });
 
@@ -16,6 +15,7 @@ export const Mutation = {
 
     const hashedPassword = await hashPassword(password);
     const user = await prisma.createUser({ ...args.data, password: hashedPassword });
+    await passportCtx.login(user);
 
     return {
       user,
@@ -42,24 +42,22 @@ export const Mutation = {
     const id = getUserIdFromAuthorizationHeader(request);
     return prisma.deleteUser({ id });
   },
-  login: async (_parent: unknown, args: Auth.Login, { prisma }: Context): Promise<Auth.Payload> => {
+  login: async (_parent: unknown, args: Auth.Login, { passportCtx }: Context): Promise<Auth.Payload> => {
     const { email, password } = args;
 
-    const user = await prisma.user({ email });
+    const { user } = await passportCtx.authenticate('graphql-local', { email, password });
 
     if (!isDefined(user)) {
       throw new Error('Authentication failed');
     }
 
-    const isValid = await bcrypt.compare(password, user.password);
-
-    if (!isValid) {
-      throw new Error('Authentication failed');
-    }
-
+    await passportCtx.login(user);
     return {
       user,
       token: await generateToken(user.id),
     };
+  },
+  logout: async (_parent: unknown, args: unknown, { passportCtx }: Context): Promise<void> => {
+    passportCtx.logout();
   },
 };

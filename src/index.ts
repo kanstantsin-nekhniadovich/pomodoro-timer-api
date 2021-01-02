@@ -1,22 +1,26 @@
-import express, { Request } from 'express';
+import express from 'express';
+import { buildContext } from 'graphql-passport';
+import passport from 'passport';
 import { ApolloServer } from 'apollo-server-express';
-import { resolvers } from './resolvers';
 import cors from 'cors';
+import { resolvers } from './resolvers';
 import { prisma } from './prisma-client';
 import { typeDefs } from './schema.graphql';
+import { auth } from './auth';
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }: { req: Request }) => ({
-    prisma,
-    request: req,
-  }),
+  context: ({ req, res }) => ({ passportCtx: buildContext({ req, res }), prisma, request: req }),
   playground: true,
 });
 
 const app = express();
+
 app.use(cors());
+app.use(passport.initialize());
+
+auth(prisma);
 
 server.applyMiddleware({ app, path: process.env.GRAPHQL_PATH });
 

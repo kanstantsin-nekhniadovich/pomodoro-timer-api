@@ -10,6 +10,8 @@ import { Query as TaskQuery } from './task/query';
 import { Mutation as TaskMutation } from './task/mutation';
 import { Task } from './task/relations';
 
+import { Void } from './void';
+
 export const resolvers = {
   Query: {
     ...UserQuery,
@@ -24,4 +26,5 @@ export const resolvers = {
   User,
   Project,
   Task,
+  Void,
 };
