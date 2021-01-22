@@ -26,10 +26,13 @@ export const Mutation = {
   },
   updateUser: async (_parent: unknown, args: User.Mutation.UpdateUser, { prisma, request }: Context): Promise<Nullable<User>> => {
     const { data } = args;
-    const userExists = await prisma.$exists.user({ email: data.email });
 
-    if (userExists) {
-      throw new Error('User with this email already exists');
+    if (typeof data.email === 'string') {
+      const userExists = await prisma.$exists.user({ email: data.email });
+      
+      if (userExists) {
+        throw new Error('User with this email already exists');
+      }
     }
 
     if (typeof data.password === 'string') {
