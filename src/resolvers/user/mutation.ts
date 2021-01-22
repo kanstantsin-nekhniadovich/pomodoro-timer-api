@@ -29,7 +29,7 @@ export const Mutation = {
 
     if (typeof data.email === 'string') {
       const userExists = await prisma.$exists.user({ email: data.email });
-      
+
       if (userExists) {
         throw new Error('User with this email already exists');
       }
