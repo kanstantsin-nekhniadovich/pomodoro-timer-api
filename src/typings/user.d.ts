@@ -18,19 +18,20 @@ export namespace Auth {
 export namespace User {
   export namespace Mutation {
 
-    type Payload = {
-      name?: string;
-      email?: string;
-      password?: string;
-      avatarUrl?: string;
-    };
-
     export type CreateUser = {
-      data: Required<Payload> & { avatarUrl?: string };
+      data: {
+        email: string;
+        password: string;
+      };
     };
 
     export type UpdateUser = {
-      data: Payload;
+      data: {
+        name?: string;
+        email?: string;
+        password?: string;
+        avatarUrl?: string;
+      };
     };
   }
 }
