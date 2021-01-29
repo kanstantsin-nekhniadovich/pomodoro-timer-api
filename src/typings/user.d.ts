@@ -22,7 +22,15 @@ export namespace User {
       data: {
         email: string;
         password: string;
-      };
+      },
+    };
+
+    export type CreateFacebookUser = {
+      data: {
+        email: string;
+        name: string;
+        avatarUrl: string;
+      },
     };
 
     export type UpdateUser = {
@@ -31,7 +39,7 @@ export namespace User {
         email?: string;
         password?: string;
         avatarUrl?: string;
-      };
+      },
     };
   }
 }

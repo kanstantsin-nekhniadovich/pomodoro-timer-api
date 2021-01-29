@@ -694,8 +694,9 @@ type User {
   id: ID!
   name: String!
   email: String!
-  password: String!
+  password: String
   avatarUrl: String
+  isFacebookUser: Boolean!
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project!]
 }
 
@@ -709,8 +710,9 @@ input UserCreateInput {
   id: ID
   name: String!
   email: String!
-  password: String!
+  password: String
   avatarUrl: String
+  isFacebookUser: Boolean!
   projects: ProjectCreateManyWithoutOwnerInput
 }
 
@@ -723,8 +725,9 @@ input UserCreateWithoutProjectsInput {
   id: ID
   name: String!
   email: String!
-  password: String!
+  password: String
   avatarUrl: String
+  isFacebookUser: Boolean!
 }
 
 type UserEdge {
@@ -743,14 +746,17 @@ enum UserOrderByInput {
   password_DESC
   avatarUrl_ASC
   avatarUrl_DESC
+  isFacebookUser_ASC
+  isFacebookUser_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   name: String!
   email: String!
-  password: String!
+  password: String
   avatarUrl: String
+  isFacebookUser: Boolean!
 }
 
 type UserSubscriptionPayload {
@@ -776,6 +782,7 @@ input UserUpdateInput {
   email: String
   password: String
   avatarUrl: String
+  isFacebookUser: Boolean
   projects: ProjectUpdateManyWithoutOwnerInput
 }
 
@@ -784,6 +791,7 @@ input UserUpdateManyMutationInput {
   email: String
   password: String
   avatarUrl: String
+  isFacebookUser: Boolean
 }
 
 input UserUpdateOneRequiredWithoutProjectsInput {
@@ -798,6 +806,7 @@ input UserUpdateWithoutProjectsDataInput {
   email: String
   password: String
   avatarUrl: String
+  isFacebookUser: Boolean
 }
 
 input UserUpsertWithoutProjectsInput {
@@ -876,6 +885,8 @@ input UserWhereInput {
   avatarUrl_not_starts_with: String
   avatarUrl_ends_with: String
   avatarUrl_not_ends_with: String
+  isFacebookUser: Boolean
+  isFacebookUser_not: Boolean
   projects_every: ProjectWhereInput
   projects_some: ProjectWhereInput
   projects_none: ProjectWhereInput
@@ -888,4 +899,4 @@ input UserWhereUniqueInput {
   id: ID
   email: String
 }
-`;
+`

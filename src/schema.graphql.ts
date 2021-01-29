@@ -11,9 +11,11 @@ export const typeDefs = gql`
 
   type Mutation {
     createUser(data: CreateUserInput!): AuthPayload!
+    createFacebookUser(data: CreateFacebookUserInput!): AuthPayload!
     updateUser(data: UpdateUserInput!): User!
     deleteUser: User!
     login(email: String!, password: String!): AuthPayload!
+    facebookLogin(email: String!):AuthPayload!
     createTask(data: CreateTaskInput!): Task!
     updateTask(data: UpdateTaskInput!, where: UniqueIdInput!): Task!
     deleteTask(id: ID!): Task!
@@ -25,6 +27,12 @@ export const typeDefs = gql`
   input CreateUserInput {
     email: String!
     password: String!
+  }
+
+  input CreateFacebookUserInput {
+    email: String!
+    name: String!
+    avatarUrl: String
   }
 
   input UpdateUserInput {
@@ -89,7 +97,7 @@ export const typeDefs = gql`
     id: ID!
     name: String!
     email: String!
-    password: String!
+    password: String
     avatarUrl: String
     projects: [Project!]!
   }

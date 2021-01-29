@@ -9,15 +9,46 @@ import { auth } from 'firebase-admin';
 export const Mutation = {
   createUser: async (_parent: unknown, args: User.Mutation.CreateUser, { prisma }: Context): Promise<Auth.Payload> => {
     const { email, password } = args.data;
-    const userExists = await prisma.$exists.user({ email });
+    const existingUser = await prisma.user({ email });
 
-    if (userExists) {
+    if (isDefined(existingUser) && !existingUser.isFacebookUser) {
       throw new Error('User with this email already exists');
     }
 
     const hashedPassword = await hashPassword(password);
+
+    if (isDefined(existingUser) && existingUser.isFacebookUser) {
+      const user = await prisma.updateUser({ data: { password: hashedPassword }, where: { id: existingUser.id } });
+
+      return {
+        user,
+        token: await generateToken(user.id),
+        firebaseToken: await auth().createCustomToken(user.id),
+      };
+    }
+
     const name = email.split('@')[0].toLowerCase();
-    const user = await prisma.createUser({ email, name, password: hashedPassword });
+    const user = await prisma.createUser({ email, name, password: hashedPassword, isFacebookUser: false, });
+
+    return {
+      user,
+      token: await generateToken(user.id),
+      firebaseToken: await auth().createCustomToken(user.id),
+    };
+  },
+  createFacebookUser: async (_parent: unknown, args: User.Mutation.CreateFacebookUser, { prisma }: Context): Promise<Auth.Payload> => {
+    const { email, avatarUrl, name } = args.data;
+    const existingUser = await prisma.user({ email });
+
+    if (isDefined(existingUser)) {
+      return {
+        user: existingUser,
+        token: await generateToken(existingUser.id),
+        firebaseToken: await auth().createCustomToken(existingUser.id),
+      };
+    }
+
+    const user = await prisma.createUser({ email, name, avatarUrl, isFacebookUser: true });
 
     return {
       user,
@@ -53,13 +84,27 @@ export const Mutation = {
 
     const user = await prisma.user({ email });
 
-    if (!isDefined(user)) {
+    if (!isDefined(user) || !isDefined(user.password)) {
       throw new Error('Authentication failed');
     }
 
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
+      throw new Error('Authentication failed');
+    }
+
+    return {
+      user,
+      token: await generateToken(user.id),
+      firebaseToken: await auth().createCustomToken(user.id),
+    };
+  },
+  facebookLogin: async (_parent: unknown, args: { email: string }, { prisma }: Context): Promise<Auth.Payload> => {
+    const { email } = args;
+    const user = await prisma.user({ email });
+
+    if (!isDefined(user)) {
       throw new Error('Authentication failed');
     }
 

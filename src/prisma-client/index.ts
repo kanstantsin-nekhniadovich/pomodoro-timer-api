@@ -2,13 +2,13 @@
 // Please don't change this file manually but run `prisma generate` to update it.
 // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-import { DocumentNode } from 'graphql';
+import { DocumentNode } from "graphql";
 import {
   makePrismaClientClass,
   BaseClientOptions,
-  Model,
-} from 'prisma-client-lib';
-import { typeDefs } from './prisma-schema';
+  Model
+} from "prisma-client-lib";
+import { typeDefs } from "./prisma-schema";
 
 export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
@@ -33,7 +33,7 @@ export interface Prisma {
   $exists: Exists;
   $graphql: <T = any>(
     query: string,
-    variables?: { [key: string]: any },
+    variables?: { [key: string]: any }
   ) => Promise<T>;
 
   /**
@@ -161,13 +161,13 @@ export interface Prisma {
 
 export interface Subscription {
   project: (
-    where?: ProjectSubscriptionWhereInput,
+    where?: ProjectSubscriptionWhereInput
   ) => ProjectSubscriptionPayloadSubscription;
   task: (
-    where?: TaskSubscriptionWhereInput,
+    where?: TaskSubscriptionWhereInput
   ) => TaskSubscriptionPayloadSubscription;
   user: (
-    where?: UserSubscriptionWhereInput,
+    where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
 }
 
@@ -179,49 +179,51 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type Status = 'TODO' | 'INPROGRESS' | 'COMPLETED';
+export type Status = "TODO" | "INPROGRESS" | "COMPLETED";
 
 export type TaskOrderByInput =
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'title_ASC'
-  | 'title_DESC'
-  | 'cyclesCount_ASC'
-  | 'cyclesCount_DESC'
-  | 'workTime_ASC'
-  | 'workTime_DESC'
-  | 'breakTime_ASC'
-  | 'breakTime_DESC'
-  | 'status_ASC'
-  | 'status_DESC'
-  | 'remainingTime_ASC'
-  | 'remainingTime_DESC'
-  | 'currentCycle_ASC'
-  | 'currentCycle_DESC';
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "cyclesCount_ASC"
+  | "cyclesCount_DESC"
+  | "workTime_ASC"
+  | "workTime_DESC"
+  | "breakTime_ASC"
+  | "breakTime_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "remainingTime_ASC"
+  | "remainingTime_DESC"
+  | "currentCycle_ASC"
+  | "currentCycle_DESC";
 
 export type ProjectOrderByInput =
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'title_ASC'
-  | 'title_DESC'
-  | 'status_ASC'
-  | 'status_DESC'
-  | 'note_ASC'
-  | 'note_DESC';
+  | "id_ASC"
+  | "id_DESC"
+  | "title_ASC"
+  | "title_DESC"
+  | "status_ASC"
+  | "status_DESC"
+  | "note_ASC"
+  | "note_DESC";
 
 export type UserOrderByInput =
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'name_ASC'
-  | 'name_DESC'
-  | 'email_ASC'
-  | 'email_DESC'
-  | 'password_ASC'
-  | 'password_DESC'
-  | 'avatarUrl_ASC'
-  | 'avatarUrl_DESC';
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "avatarUrl_ASC"
+  | "avatarUrl_DESC"
+  | "isFacebookUser_ASC"
+  | "isFacebookUser_DESC";
 
-export type MutationType = 'CREATED' | 'UPDATED' | 'DELETED';
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type ProjectWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -434,6 +436,8 @@ export interface UserWhereInput {
   avatarUrl_not_starts_with?: Maybe<String>;
   avatarUrl_ends_with?: Maybe<String>;
   avatarUrl_not_ends_with?: Maybe<String>;
+  isFacebookUser?: Maybe<Boolean>;
+  isFacebookUser_not?: Maybe<Boolean>;
   projects_every?: Maybe<ProjectWhereInput>;
   projects_some?: Maybe<ProjectWhereInput>;
   projects_none?: Maybe<ProjectWhereInput>;
@@ -487,8 +491,9 @@ export interface UserCreateWithoutProjectsInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
-  password: String;
+  password?: Maybe<String>;
   avatarUrl?: Maybe<String>;
+  isFacebookUser: Boolean;
 }
 
 export interface ProjectUpdateInput {
@@ -647,6 +652,7 @@ export interface UserUpdateWithoutProjectsDataInput {
   email?: Maybe<String>;
   password?: Maybe<String>;
   avatarUrl?: Maybe<String>;
+  isFacebookUser?: Maybe<Boolean>;
 }
 
 export interface UserUpsertWithoutProjectsInput {
@@ -729,8 +735,9 @@ export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
-  password: String;
+  password?: Maybe<String>;
   avatarUrl?: Maybe<String>;
+  isFacebookUser: Boolean;
   projects?: Maybe<ProjectCreateManyWithoutOwnerInput>;
 }
 
@@ -754,6 +761,7 @@ export interface UserUpdateInput {
   email?: Maybe<String>;
   password?: Maybe<String>;
   avatarUrl?: Maybe<String>;
+  isFacebookUser?: Maybe<Boolean>;
   projects?: Maybe<ProjectUpdateManyWithoutOwnerInput>;
 }
 
@@ -866,6 +874,7 @@ export interface UserUpdateManyMutationInput {
   email?: Maybe<String>;
   password?: Maybe<String>;
   avatarUrl?: Maybe<String>;
+  isFacebookUser?: Maybe<Boolean>;
 }
 
 export interface ProjectSubscriptionWhereInput {
@@ -1022,8 +1031,9 @@ export interface User {
   id: ID_Output;
   name: String;
   email: String;
-  password: String;
+  password?: String;
   avatarUrl?: String;
+  isFacebookUser: Boolean;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -1032,6 +1042,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   email: () => Promise<String>;
   password: () => Promise<String>;
   avatarUrl: () => Promise<String>;
+  isFacebookUser: () => Promise<Boolean>;
   projects: <T = FragmentableArray<Project>>(args?: {
     where?: ProjectWhereInput;
     orderBy?: ProjectOrderByInput;
@@ -1051,6 +1062,7 @@ export interface UserSubscription
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   avatarUrl: () => Promise<AsyncIterator<String>>;
+  isFacebookUser: () => Promise<AsyncIterator<Boolean>>;
   projects: <T = Promise<AsyncIterator<ProjectSubscription>>>(args?: {
     where?: ProjectWhereInput;
     orderBy?: ProjectOrderByInput;
@@ -1070,6 +1082,7 @@ export interface UserNullablePromise
   email: () => Promise<String>;
   password: () => Promise<String>;
   avatarUrl: () => Promise<String>;
+  isFacebookUser: () => Promise<Boolean>;
   projects: <T = FragmentableArray<Project>>(args?: {
     where?: ProjectWhereInput;
     orderBy?: ProjectOrderByInput;
@@ -1423,8 +1436,9 @@ export interface UserPreviousValues {
   id: ID_Output;
   name: String;
   email: String;
-  password: String;
+  password?: String;
   avatarUrl?: String;
+  isFacebookUser: Boolean;
 }
 
 export interface UserPreviousValuesPromise
@@ -1435,6 +1449,7 @@ export interface UserPreviousValuesPromise
   email: () => Promise<String>;
   password: () => Promise<String>;
   avatarUrl: () => Promise<String>;
+  isFacebookUser: () => Promise<Boolean>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -1445,6 +1460,7 @@ export interface UserPreviousValuesSubscription
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   avatarUrl: () => Promise<AsyncIterator<String>>;
+  isFacebookUser: () => Promise<AsyncIterator<Boolean>>;
 }
 
 /*
@@ -1476,21 +1492,21 @@ export type Long = string;
 
 export const models: Model[] = [
   {
-    name: 'User',
-    embedded: false,
+    name: "User",
+    embedded: false
   },
   {
-    name: 'Task',
-    embedded: false,
+    name: "Task",
+    embedded: false
   },
   {
-    name: 'Project',
-    embedded: false,
+    name: "Project",
+    embedded: false
   },
   {
-    name: 'Status',
-    embedded: false,
-  },
+    name: "Status",
+    embedded: false
+  }
 ];
 
 /**
@@ -1500,7 +1516,7 @@ export const models: Model[] = [
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `${process.env['PRISMA_ENDPOINT']}`,
-  secret: `${process.env['PRISMA_SECRET']}`,
+  endpoint: `${process.env["PRISMA_ENDPOINT"]}`,
+  secret: `${process.env["PRISMA_SECRET"]}`
 });
 export const prisma = new Prisma();

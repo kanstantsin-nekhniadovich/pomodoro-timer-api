@@ -2,8 +2,9 @@ type User {
     id: ID! @id
     name: String!
     email: String! @unique
-    password: String!
+    password: String
     avatarUrl: String
+    isFacebookUser: Boolean!
     projects: [Project!]! @relation(name: "ProjectByUser", onDelete: CASCADE)
 }
 
