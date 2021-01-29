@@ -1,3 +1,4 @@
+import { UserInputError } from 'apollo-server-express';
 import { Project } from '@typings';
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
 
@@ -18,7 +19,7 @@ export const Mutation = {
     const projectExists = await prisma.$exists.project({ id, owner: { id: userId } });
 
     if (!projectExists) {
-      throw new Error('Project does not exist');
+      throw new UserInputError('Project does not exist');
     }
 
     return prisma.updateProject(args);
@@ -29,7 +30,7 @@ export const Mutation = {
     const projectExists = await prisma.$exists.project({ id, owner: { id: userId } });
 
     if (!projectExists) {
-      throw new Error('Project does not exist');
+      throw new UserInputError('Project does not exist');
     }
     return prisma.deleteProject(args);
   },

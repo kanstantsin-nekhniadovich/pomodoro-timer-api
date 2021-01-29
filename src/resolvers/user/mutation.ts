@@ -1,3 +1,4 @@
+import { UserInputError, AuthenticationError } from 'apollo-server-express';
 import { User, Auth } from '@typings';
 import bcrypt from 'bcryptjs';
 import { hashPassword } from '../../utils/hashPassword';
@@ -12,7 +13,7 @@ export const Mutation = {
     const existingUser = await prisma.user({ email });
 
     if (isDefined(existingUser) && !existingUser.isFacebookUser) {
-      throw new Error('User with this email already exists');
+      throw new UserInputError('User with this email already exists');
     }
 
     const hashedPassword = await hashPassword(password);
@@ -63,7 +64,7 @@ export const Mutation = {
       const userExists = await prisma.$exists.user({ email: data.email });
 
       if (userExists) {
-        throw new Error('User with this email already exists');
+        throw new UserInputError('User with this email already exists');
       }
     }
 
@@ -85,13 +86,13 @@ export const Mutation = {
     const user = await prisma.user({ email });
 
     if (!isDefined(user) || !isDefined(user.password)) {
-      throw new Error('Authentication failed');
+      throw new AuthenticationError('Authentication failed');
     }
 
     const isValid = await bcrypt.compare(password, user.password);
 
     if (!isValid) {
-      throw new Error('Authentication failed');
+      throw new AuthenticationError('Authentication failed');
     }
 
     return {
@@ -105,7 +106,7 @@ export const Mutation = {
     const user = await prisma.user({ email });
 
     if (!isDefined(user)) {
-      throw new Error('Authentication failed');
+      throw new AuthenticationError('Authentication failed');
     }
 
     return {
