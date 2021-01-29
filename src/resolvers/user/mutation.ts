@@ -28,7 +28,7 @@ export const Mutation = {
     }
 
     const name = email.split('@')[0].toLowerCase();
-    const user = await prisma.createUser({ email, name, password: hashedPassword, isFacebookUser: false, });
+    const user = await prisma.createUser({ email, name, password: hashedPassword, isFacebookUser: false });
 
     return {
       user,
