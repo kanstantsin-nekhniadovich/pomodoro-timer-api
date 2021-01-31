@@ -13,7 +13,7 @@ export const Mutation = {
     const existingUser = await prisma.user({ email });
 
     if (isDefined(existingUser) && !existingUser.isFacebookUser) {
-      throw new UserInputError('User with this email already exists');
+      throw new UserInputError('User with this email is already exists');
     }
 
     const hashedPassword = await hashPassword(password);
@@ -64,7 +64,7 @@ export const Mutation = {
       const userExists = await prisma.$exists.user({ email: data.email });
 
       if (userExists) {
-        throw new UserInputError('User with this email already exists');
+        throw new UserInputError('User with this email is already exists');
       }
     }
 
