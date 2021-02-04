@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { hashPassword } from '../../utils/hashPassword';
 import { generateToken } from '../../utils/generateToken';
 import { isDefined } from '../../utils/isDefined';
+import { isValidPassword } from '../../utils/isValidPassword';
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
 import { auth } from 'firebase-admin';
 
@@ -14,6 +15,10 @@ export const Mutation = {
 
     if (isDefined(existingUser) && !existingUser.isFacebookUser) {
       throw new UserInputError('User with this email is already exists');
+    }
+
+    if (!isValidPassword(password)) {
+      throw new UserInputError('Password must be at least 8 characters length');
     }
 
     const hashedPassword = await hashPassword(password);
@@ -69,7 +74,11 @@ export const Mutation = {
     }
 
     if (typeof data.password === 'string') {
-      data.password = await hashPassword(data.password);
+      if (isValidPassword(data.password)) {
+        data.password = await hashPassword(data.password);
+      } else {
+        throw new UserInputError('Password must be at least 8 characters length');
+      }
     }
 
     const id = getUserIdFromAuthorizationHeader(request);
