@@ -80,7 +80,6 @@ export const typeDefs = gql`
   input CreateProjectInput {
     title: String!
     status: Status!
-    note: String!
   }
 
   input ConnectOwnerToProject {

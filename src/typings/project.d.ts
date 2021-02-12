@@ -15,18 +15,19 @@ export namespace Project {
   }
 
   export namespace Mutation {
-    type Payload = {
-      title?: string;
-      status?: Status;
-      note?: string;
-    };
-
     export type CreateProject = {
-      data: Required<Payload>;
+      data: {
+        title: string;
+        status: Status;
+      };
     };
 
     export type UpdateProject = {
-      data: Payload;
+      data: {
+        title?: string;
+        status?: Status;
+        note?: string;
+      };
       where: UniqueIdPayload;
     };
   }
