@@ -197,7 +197,11 @@ export type TaskOrderByInput =
   | "remainingTime_ASC"
   | "remainingTime_DESC"
   | "currentCycle_ASC"
-  | "currentCycle_DESC";
+  | "currentCycle_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type ProjectOrderByInput =
   | "id_ASC"
@@ -207,7 +211,11 @@ export type ProjectOrderByInput =
   | "status_ASC"
   | "status_DESC"
   | "note_ASC"
-  | "note_DESC";
+  | "note_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -304,6 +312,22 @@ export interface TaskWhereInput {
   currentCycle_gt?: Maybe<Int>;
   currentCycle_gte?: Maybe<Int>;
   project?: Maybe<ProjectWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<TaskWhereInput[] | TaskWhereInput>;
   OR?: Maybe<TaskWhereInput[] | TaskWhereInput>;
   NOT?: Maybe<TaskWhereInput[] | TaskWhereInput>;
@@ -360,6 +384,22 @@ export interface ProjectWhereInput {
   note_ends_with?: Maybe<String>;
   note_not_ends_with?: Maybe<String>;
   owner?: Maybe<UserWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
   OR?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
   NOT?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
@@ -620,6 +660,22 @@ export interface TaskScalarWhereInput {
   currentCycle_lte?: Maybe<Int>;
   currentCycle_gt?: Maybe<Int>;
   currentCycle_gte?: Maybe<Int>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
   OR?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
   NOT?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
@@ -853,6 +909,22 @@ export interface ProjectScalarWhereInput {
   note_not_starts_with?: Maybe<String>;
   note_ends_with?: Maybe<String>;
   note_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   AND?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
   OR?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
   NOT?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
@@ -919,6 +991,8 @@ export interface Project {
   title: String;
   status: Status;
   note?: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface ProjectPromise extends Promise<Project>, Fragmentable {
@@ -936,6 +1010,8 @@ export interface ProjectPromise extends Promise<Project>, Fragmentable {
   status: () => Promise<Status>;
   note: () => Promise<String>;
   owner: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ProjectSubscription
@@ -955,6 +1031,8 @@ export interface ProjectSubscription
   status: () => Promise<AsyncIterator<Status>>;
   note: () => Promise<AsyncIterator<String>>;
   owner: <T = UserSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface ProjectNullablePromise
@@ -974,6 +1052,8 @@ export interface ProjectNullablePromise
   status: () => Promise<Status>;
   note: () => Promise<String>;
   owner: <T = UserPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface Task {
@@ -985,6 +1065,8 @@ export interface Task {
   status: Status;
   remainingTime: Int;
   currentCycle: Int;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface TaskPromise extends Promise<Task>, Fragmentable {
@@ -997,6 +1079,8 @@ export interface TaskPromise extends Promise<Task>, Fragmentable {
   remainingTime: () => Promise<Int>;
   currentCycle: () => Promise<Int>;
   project: <T = ProjectPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface TaskSubscription
@@ -1011,6 +1095,8 @@ export interface TaskSubscription
   remainingTime: () => Promise<AsyncIterator<Int>>;
   currentCycle: () => Promise<AsyncIterator<Int>>;
   project: <T = ProjectSubscription>() => T;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface TaskNullablePromise
@@ -1025,6 +1111,8 @@ export interface TaskNullablePromise
   remainingTime: () => Promise<Int>;
   currentCycle: () => Promise<Int>;
   project: <T = ProjectPromise>() => T;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface User {
@@ -1325,6 +1413,8 @@ export interface ProjectPreviousValues {
   title: String;
   status: Status;
   note?: String;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface ProjectPreviousValuesPromise
@@ -1334,6 +1424,8 @@ export interface ProjectPreviousValuesPromise
   title: () => Promise<String>;
   status: () => Promise<Status>;
   note: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface ProjectPreviousValuesSubscription
@@ -1343,6 +1435,8 @@ export interface ProjectPreviousValuesSubscription
   title: () => Promise<AsyncIterator<String>>;
   status: () => Promise<AsyncIterator<Status>>;
   note: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface TaskSubscriptionPayload {
@@ -1379,6 +1473,8 @@ export interface TaskPreviousValues {
   status: Status;
   remainingTime: Int;
   currentCycle: Int;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
 }
 
 export interface TaskPreviousValuesPromise
@@ -1392,6 +1488,8 @@ export interface TaskPreviousValuesPromise
   status: () => Promise<Status>;
   remainingTime: () => Promise<Int>;
   currentCycle: () => Promise<Int>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
 }
 
 export interface TaskPreviousValuesSubscription
@@ -1405,6 +1503,8 @@ export interface TaskPreviousValuesSubscription
   status: () => Promise<AsyncIterator<Status>>;
   remainingTime: () => Promise<AsyncIterator<Int>>;
   currentCycle: () => Promise<AsyncIterator<Int>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1483,6 +1583,16 @@ export type Int = number;
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
 
 export type Long = string;
 

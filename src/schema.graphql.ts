@@ -1,6 +1,8 @@
 import { gql } from 'apollo-server-express';
 
 export const typeDefs = gql`
+  scalar DateTime
+
   type Query {
     user(id: ID): User!
     task(id: ID!): Task
@@ -111,6 +113,8 @@ export const typeDefs = gql`
     remainingTime: Int!
     currentCycle: Int!
     project: Project!
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   type Project {
@@ -120,6 +124,8 @@ export const typeDefs = gql`
     status: Status!
     note: String
     owner: User!
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 
   enum Status {

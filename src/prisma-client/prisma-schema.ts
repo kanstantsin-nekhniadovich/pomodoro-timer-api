@@ -18,6 +18,8 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 scalar Long
 
 type Mutation {
@@ -65,6 +67,8 @@ type Project {
   status: Status!
   note: String
   owner: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ProjectConnection {
@@ -122,6 +126,10 @@ enum ProjectOrderByInput {
   status_DESC
   note_ASC
   note_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ProjectPreviousValues {
@@ -129,6 +137,8 @@ type ProjectPreviousValues {
   title: String!
   status: Status!
   note: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input ProjectScalarWhereInput {
@@ -178,6 +188,22 @@ input ProjectScalarWhereInput {
   note_not_starts_with: String
   note_ends_with: String
   note_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [ProjectScalarWhereInput!]
   OR: [ProjectScalarWhereInput!]
   NOT: [ProjectScalarWhereInput!]
@@ -326,6 +352,22 @@ input ProjectWhereInput {
   note_ends_with: String
   note_not_ends_with: String
   owner: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [ProjectWhereInput!]
   OR: [ProjectWhereInput!]
   NOT: [ProjectWhereInput!]
@@ -371,6 +413,8 @@ type Task {
   remainingTime: Int!
   currentCycle: Int!
   project: Project!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type TaskConnection {
@@ -429,6 +473,10 @@ enum TaskOrderByInput {
   remainingTime_DESC
   currentCycle_ASC
   currentCycle_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type TaskPreviousValues {
@@ -440,6 +488,8 @@ type TaskPreviousValues {
   status: Status!
   remainingTime: Int!
   currentCycle: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input TaskScalarWhereInput {
@@ -515,6 +565,22 @@ input TaskScalarWhereInput {
   currentCycle_lte: Int
   currentCycle_gt: Int
   currentCycle_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [TaskScalarWhereInput!]
   OR: [TaskScalarWhereInput!]
   NOT: [TaskScalarWhereInput!]
@@ -681,6 +747,22 @@ input TaskWhereInput {
   currentCycle_gt: Int
   currentCycle_gte: Int
   project: ProjectWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [TaskWhereInput!]
   OR: [TaskWhereInput!]
   NOT: [TaskWhereInput!]

@@ -1,36 +1,40 @@
 type User {
-    id: ID! @id
-    name: String!
-    email: String! @unique
-    password: String
-    avatarUrl: String
-    isFacebookUser: Boolean!
-    projects: [Project!]! @relation(name: "ProjectByUser", onDelete: CASCADE)
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String
+  avatarUrl: String
+  isFacebookUser: Boolean!
+  projects: [Project!]! @relation(name: "ProjectByUser", onDelete: CASCADE)
 }
 
 type Task {
-    id: ID! @id
-    title: String!
-    cyclesCount: Int!
-    workTime: Int!
-    breakTime: Int!
-    status: Status!
-    remainingTime: Int!
-    currentCycle: Int!
-    project: Project! @relation(name: "TaskByProject", onDelete: SET_NULL)
+  id: ID! @id
+  title: String!
+  cyclesCount: Int!
+  workTime: Int!
+  breakTime: Int!
+  status: Status!
+  remainingTime: Int!
+  currentCycle: Int!
+  project: Project! @relation(name: "TaskByProject", onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Project {
-    id: ID! @id
-    title: String! @unique
-    tasks: [Task!]! @relation(name: "TaskByProject", onDelete: CASCADE)
-    status: Status!
-    note: String
-    owner: User! @relation(name: "ProjectByUser", onDelete: SET_NULL)
+  id: ID! @id
+  title: String! @unique
+  tasks: [Task!]! @relation(name: "TaskByProject", onDelete: CASCADE)
+  status: Status!
+  note: String
+  owner: User! @relation(name: "ProjectByUser", onDelete: SET_NULL)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 enum Status {
-    TODO
-    INPROGRESS
-    COMPLETED
+  TODO
+  INPROGRESS
+  COMPLETED
 }
