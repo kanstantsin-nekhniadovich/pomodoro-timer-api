@@ -1,4 +1,4 @@
-import { Prisma, TaskWhereUniqueInput, TaskCreateInput, Task } from 'prisma-client';
+import { Prisma, TaskWhereUniqueInput, TaskCreateInput, Task, TaskOrderByInput } from 'prisma-client';
 
 export type Task = Task;
 
@@ -11,6 +11,7 @@ export namespace Task {
       before?: string;
       first?: number;
       last?: number;
+      orderBy?: TaskOrderByInput;
     };
   }
 

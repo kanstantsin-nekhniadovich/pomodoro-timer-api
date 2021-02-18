@@ -1,4 +1,4 @@
-import { Project } from 'prisma-client';
+import { Project, ProjectOrderByInput } from 'prisma-client';
 
 export type Project = Project;
 
@@ -11,6 +11,7 @@ export namespace Project {
       before?: string;
       first?: number;
       last?: number;
+      orderBy?: ProjectOrderByInput;
     };
   }
 

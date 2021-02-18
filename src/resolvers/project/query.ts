@@ -4,11 +4,11 @@ import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAutho
 
 export const Query = {
   projects: (_parent: unknown, args: Project.Query.Projects, { prisma, request }: Context): Promise<Project[]> => {
-    const { query, skip, after, before, first, last } = args;
+    const { query, skip, after, before, first, last, orderBy = 'createdAt_DESC' } = args;
     const id = getUserIdFromAuthorizationHeader(request);
 
     const where = { owner: { id } };
-    const optArgs = { last, skip, first, after, before };
+    const optArgs = { last, skip, first, after, before, orderBy };
 
     if (isDefined(query)) {
       Object.assign(where, {

@@ -3,12 +3,50 @@ import { gql } from 'apollo-server-express';
 export const typeDefs = gql`
   scalar DateTime
 
+  enum TaskOrderByInput {
+    id_ASC
+    id_DESC
+    title_ASC
+    title_DESC
+    cyclesCount_ASC
+    cyclesCount_DESC
+    workTime_ASC
+    workTime_DESC
+    breakTime_ASC
+    breakTime_DESC
+    status_ASC
+    status_DESC
+    remainingTime_ASC
+    remainingTime_DESC
+    currentCycle_ASC
+    currentCycle_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
+  }
+
+  enum ProjectOrderByInput {
+    id_ASC
+    id_DESC
+    title_ASC
+    title_DESC
+    status_ASC
+    status_DESC
+    note_ASC
+    note_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
+  }
+
   type Query {
     user(id: ID): User!
     task(id: ID!): Task
-    tasks(query: String, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+    tasks(query: String, skip: Int, after: String, before: String, first: Int, last: Int, orderBy: TaskOrderByInput): [Task]!
     project(id: ID!): Project
-    projects(query: String, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
+    projects(query: String, skip: Int, after: String, before: String, first: Int, last: Int, orderBy: ProjectOrderByInput): [Project]!
   }
 
   type Mutation {
