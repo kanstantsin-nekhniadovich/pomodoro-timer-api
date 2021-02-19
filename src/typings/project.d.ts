@@ -13,6 +13,11 @@ export namespace Project {
       last?: number;
       orderBy?: ProjectOrderByInput;
     };
+
+    export type ProjectsResponse = {
+      projects: Project[];
+      totalCount: number;
+    };
   }
 
   export namespace Mutation {

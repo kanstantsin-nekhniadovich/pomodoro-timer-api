@@ -3,9 +3,10 @@ import { isDefined } from '../../utils/isDefined';
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
 
 export const Query = {
-  projects: (_parent: unknown, args: Project.Query.Projects, { prisma, request }: Context): Promise<Project[]> => {
+  projects: async (_parent: unknown, args: Project.Query.Projects, { prisma, request }: Context): Promise<Project.Query.ProjectsResponse> => {
     const { query, skip, after, before, first, last, orderBy = 'createdAt_DESC' } = args;
     const id = getUserIdFromAuthorizationHeader(request);
+    const totalCount = await prisma.projectsConnection().aggregate().count();
 
     const where = { owner: { id } };
     const optArgs = { last, skip, first, after, before, orderBy };
@@ -20,7 +21,10 @@ export const Query = {
       });
     }
 
-    return prisma.projects({ ...optArgs, where });
+    return {
+      projects: await prisma.projects({ ...optArgs, where }),
+      totalCount
+    };
   },
   project: (_parent: unknown, args: UniqueIdPayload, { prisma }: Context): Promise<Nullable<Project>> => {
     return prisma.project({ id: args.id });

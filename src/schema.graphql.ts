@@ -46,7 +46,7 @@ export const typeDefs = gql`
     task(id: ID!): Task
     tasks(query: String, skip: Int, after: String, before: String, first: Int, last: Int, orderBy: TaskOrderByInput): [Task]!
     project(id: ID!): Project
-    projects(query: String, skip: Int, after: String, before: String, first: Int, last: Int, orderBy: ProjectOrderByInput): [Project]!
+    projects(query: String, skip: Int, after: String, before: String, first: Int, last: Int, orderBy: ProjectOrderByInput): ProjectResponse!
   }
 
   type Mutation {
@@ -164,6 +164,11 @@ export const typeDefs = gql`
     owner: User!
     createdAt: DateTime!
     updatedAt: DateTime!
+  }
+
+  type ProjectResponse {
+    projects: [Project]!
+    totalCount: Int!
   }
 
   enum Status {
