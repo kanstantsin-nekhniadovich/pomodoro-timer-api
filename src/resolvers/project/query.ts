@@ -23,7 +23,7 @@ export const Query = {
 
     return {
       projects: await prisma.projects({ ...optArgs, where }),
-      totalCount
+      totalCount,
     };
   },
   project: (_parent: unknown, args: UniqueIdPayload, { prisma }: Context): Promise<Nullable<Project>> => {
