@@ -6,9 +6,10 @@ export const Query = {
   projects: async (_parent: unknown, args: Project.Query.Projects, { prisma, request }: Context): Promise<Project.Query.ProjectsResponse> => {
     const { query, skip, after, before, first, last, orderBy = 'createdAt_DESC' } = args;
     const id = getUserIdFromAuthorizationHeader(request);
-    const totalCount = await prisma.projectsConnection().aggregate().count();
-
     const where = { owner: { id } };
+
+    const totalCount = await prisma.projectsConnection({ where }).aggregate().count();
+
     const optArgs = { last, skip, first, after, before, orderBy };
 
     if (isDefined(query)) {
