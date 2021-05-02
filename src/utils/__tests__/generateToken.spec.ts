@@ -15,6 +15,6 @@ describe('generateToken', () => {
     const token = await generateToken(USER_ID);
     const { userId } = jwt.verify(token, process.env.JWT_SECRET) as { userId: string };
 
-    expect(userId).toEqual(USER_ID);
+    expect(userId).toEqual('test-id-123qwe345sd12');
   });
 });
