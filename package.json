@@ -27,7 +27,7 @@
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
-    "prisma-client-lib": "^1.34.10",
+    "prisma-client-lib": "^1.34.12",
     "tslint-config-standard": "^9.0.0"
   },
   "devDependencies": {
