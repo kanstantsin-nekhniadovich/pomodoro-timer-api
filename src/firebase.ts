@@ -1,7 +1,7 @@
 import { initializeApp, credential } from 'firebase-admin';
 
 export const initializeFirebase = () => {
-  if (process.env.CI) {
+  if (process.env.CI === 'true') {
     return;
   }
 
