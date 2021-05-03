@@ -11,8 +11,6 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-    env:
-      CI: true
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -29,5 +27,3 @@ jobs:
       run: npm run clear
     - name: Compile typescript
       run: npm run tsc
-    - name: Run build
-      run: npm run start
