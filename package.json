@@ -19,7 +19,7 @@
   "author": "Konstantyn Niechniedowicz",
   "license": "ISC",
   "dependencies": {
-    "apollo-server-express": "^2.22.1",
+    "apollo-server-express": "^2.22.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
