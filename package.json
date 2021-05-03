@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon -e ts -w ./src -x env-cmd -f ./config/dev.env ts-node src/index.ts",
     "start": "node dist/index.js",
-    "heroku-postbuild": "rm -rf dist && tsc",
+    "clear": "rm -rf dist",
+    "tsc": "tsc",
+    "heroku-postbuild": "npm run clear && npm run tsc",
     "lint": "tslint 'src/**/*.ts' --project tsconfig.json --fix --format stylish",
     "precommit": "npm run lint",
     "test": "jest"
