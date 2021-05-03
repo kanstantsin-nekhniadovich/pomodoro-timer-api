@@ -11,10 +11,6 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-    env:
-      FIREBASE_PRIVATE_KEY: 'FIREBASE_PRIVATE_KEY'
-      FIREBASE_CLIENT_EMAIL: 'FIREBASE_CLIENT_EMAIL'
-      FIREBASE_PROJECT_ID: 'FIREBASE_PROJECT_ID'
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
