@@ -3,50 +3,12 @@ import { gql } from 'apollo-server-express';
 export const typeDefs = gql`
   scalar DateTime
 
-  enum TaskOrderByInput {
-    id_ASC
-    id_DESC
-    title_ASC
-    title_DESC
-    cyclesCount_ASC
-    cyclesCount_DESC
-    workTime_ASC
-    workTime_DESC
-    breakTime_ASC
-    breakTime_DESC
-    status_ASC
-    status_DESC
-    remainingTime_ASC
-    remainingTime_DESC
-    currentCycle_ASC
-    currentCycle_DESC
-    createdAt_ASC
-    createdAt_DESC
-    updatedAt_ASC
-    updatedAt_DESC
-  }
-
-  enum ProjectOrderByInput {
-    id_ASC
-    id_DESC
-    title_ASC
-    title_DESC
-    status_ASC
-    status_DESC
-    note_ASC
-    note_DESC
-    createdAt_ASC
-    createdAt_DESC
-    updatedAt_ASC
-    updatedAt_DESC
-  }
-
   type Query {
     user(id: ID): User!
     task(id: ID!): Task
-    tasks(query: String, skip: Int, after: String, before: String, first: Int, last: Int, orderBy: TaskOrderByInput): [Task]!
+    tasks(query: String, skip: Int, take: Int, orderBy: TaskOrderByInput, projectId: ID!): [Task]!
     project(id: ID!): Project
-    projects(query: String, skip: Int, after: String, before: String, first: Int, last: Int, orderBy: ProjectOrderByInput): ProjectResponse!
+    projects(query: String, skip: Int, take: Int, orderBy: ProjectOrderByInput): ProjectsResponse!
   }
 
   type Mutation {
@@ -59,7 +21,7 @@ export const typeDefs = gql`
     createTask(data: CreateTaskInput!): Task!
     updateTask(data: UpdateTaskInput!, where: UniqueIdInput!): Task!
     deleteTask(id: ID!): Task!
-    createProject(data: CreateProjectInput!): Project!
+    createProject(data: CreateProjectInput!): CreateProjectResponse!
     updateProject(data: UpdateProjectInput!, where: UniqueIdInput!): Project!
     deleteProject(id: ID!): Project!
   }
@@ -83,7 +45,7 @@ export const typeDefs = gql`
   }
 
   type AuthPayload {
-    user: User!
+    user: CreateUserResponse!
     token: String!
     firebaseToken: String!
   }
@@ -98,8 +60,6 @@ export const typeDefs = gql`
     workTime: Int!
     breakTime: Int!
     status: Status!
-    remainingTime: Int!
-    currentCycle: Int!
     project: ConnectTaskToProject!
   }
 
@@ -139,6 +99,16 @@ export const typeDefs = gql`
     password: String
     avatarUrl: String
     projects: [Project!]!
+    isFacebookUser: Boolean!
+  }
+
+  type CreateUserResponse {
+    id: ID!
+    name: String!
+    email: String!
+    password: String
+    avatarUrl: String
+    isFacebookUser: Boolean!
   }
 
   type Task {
@@ -150,7 +120,7 @@ export const typeDefs = gql`
     status: Status!
     remainingTime: Int!
     currentCycle: Int!
-    project: Project!
+    projectId: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
   }
@@ -161,14 +131,53 @@ export const typeDefs = gql`
     tasks: [Task!]!
     status: Status!
     note: String
-    owner: User!
+    ownerId: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
   }
 
-  type ProjectResponse {
+  type CreateProjectResponse {
+    id: ID!
+    title: String!
+    status: Status!
+    note: String
+    ownerId: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+  }
+
+  type ProjectsResponse {
     projects: [Project]!
     totalCount: Int!
+  }
+
+  input ProjectOrderByInput {
+    id: SortOrder
+    title: SortOrder
+    status: SortOrder
+    note: SortOrder
+    ownerId: SortOrder
+    createdAt: SortOrder
+    updatedAt: SortOrder
+  }
+
+  input TaskOrderByInput {
+    id: SortOrder
+    title: SortOrder
+    cyclesCount: SortOrder
+    workTime: SortOrder
+    breakTime: SortOrder
+    status: SortOrder
+    remainingTime: SortOrder
+    currentCycle: SortOrder
+    projectId: SortOrder
+    createdAt: SortOrder
+    updatedAt: SortOrder
+  }
+
+  enum SortOrder {
+    asc
+    desc
   }
 
   enum Status {

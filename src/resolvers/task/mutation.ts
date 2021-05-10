@@ -1,25 +1,23 @@
-import { UserInputError } from 'apollo-server-express';
-import { Task } from '@typings';
+import { TaskResolvers } from '@typings';
+import { Task } from '@prisma/client';
+
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
+import { validateProjectExistence } from '../validateProjectExistence';
 
 export const Mutation = {
-  createTask: async (_parent: unknown, args: Task.Mutation.CreateTask, { prisma, request }: Context): Promise<Task> => {
-    const { data: { project: { connect: { id } } } } = args;
-    const userId = getUserIdFromAuthorizationHeader(request);
-    const projectExists = await prisma.$exists.project({ id, owner: { id: userId } });
-
-    if (!projectExists) {
-      throw new UserInputError('Project does not exist');
-    }
-
-    return prisma.createTask(args.data);
-  },
-  updateTask: (_parent: unknown, args: Task.Mutation.UpdateTask, { prisma, request }: Context): Promise<Task> => {
+  createTask: async (_parent: unknown, args: TaskResolvers.CreateTask, { prisma, request }: Context): Promise<Task> => {
+    const { data: { project: { connect: { id } }, workTime } } = args;
     getUserIdFromAuthorizationHeader(request);
-    return prisma.updateTask(args);
+    await validateProjectExistence(prisma)(id);
+
+    return prisma.task.create({ data: { ...args.data, currentCycle: 1, remainingTime: workTime } });
   },
-  deleteTask: (_parent: unknown, args: UniqueIdPayload, { prisma, request }: Context): Promise<Task> => {
+  updateTask: (_parent: unknown, args: TaskResolvers.UpdateTask, { prisma, request }: Context): Promise<Task> => {
     getUserIdFromAuthorizationHeader(request);
-    return prisma.deleteTask(args);
+    return prisma.task.update(args);
+  },
+  deleteTask: (_parent: unknown, { id }: UniqueIdPayload, { prisma, request }: Context): Promise<Task> => {
+    getUserIdFromAuthorizationHeader(request);
+    return prisma.task.delete({ where: { id } });
   },
 };

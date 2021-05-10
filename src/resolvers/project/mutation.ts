@@ -1,37 +1,26 @@
-import { UserInputError } from 'apollo-server-express';
-import { Project } from '@typings';
+import { Project } from '@prisma/client';
+import { ProjectResolvers } from '@typings';
+
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
+import { validateProjectExistence } from '../validateProjectExistence';
 
 export const Mutation = {
-  createProject: (_parent: unknown, args: Project.Mutation.CreateProject, { prisma, request }: Context): Promise<Project> => {
+  createProject: (_parent: unknown, args: ProjectResolvers.CreateProject, { prisma, request }: Context): Promise<Project> => {
     const id = getUserIdFromAuthorizationHeader(request);
-    const owner = {
-      connect: {
-        id,
-      },
-    };
-
-    return prisma.createProject({ ...args.data, owner });
+    return prisma.project.create({ data: { ...args.data, owner: { connect: { id } } } });
   },
-  updateProject: async (_parent: unknown, args: Project.Mutation.UpdateProject, { prisma, request }: Context): Promise<Project> => {
+  updateProject: async (_parent: unknown, args: ProjectResolvers.UpdateProject, { prisma, request }: Context): Promise<Project> => {
     const { where: { id } } = args;
-    const userId = getUserIdFromAuthorizationHeader(request);
-    const projectExists = await prisma.$exists.project({ id, owner: { id: userId } });
+    getUserIdFromAuthorizationHeader(request);
+    await validateProjectExistence(prisma)(id);
 
-    if (!projectExists) {
-      throw new UserInputError('Project does not exist');
-    }
-
-    return prisma.updateProject(args);
+    return prisma.project.update(args);
   },
   deleteProject: async (_parent: unknown, args: UniqueIdPayload, { prisma, request }: Context): Promise<Project> => {
     const { id } = args;
-    const userId = getUserIdFromAuthorizationHeader(request);
-    const projectExists = await prisma.$exists.project({ id, owner: { id: userId } });
+    getUserIdFromAuthorizationHeader(request);
+    await validateProjectExistence(prisma)(id);
 
-    if (!projectExists) {
-      throw new UserInputError('Project does not exist');
-    }
-    return prisma.deleteProject(args);
+    return prisma.project.delete({ where: args });
   },
 };

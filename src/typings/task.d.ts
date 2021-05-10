@@ -1,42 +1,53 @@
-import { Prisma, TaskWhereUniqueInput, TaskCreateInput, Task, TaskOrderByInput } from 'prisma-client';
+import { Task } from '@prisma/client';
 
-export type Task = Task;
+type TaskOrderByInput = {
+  id?: SortOrder
+  title?: SortOrder
+  cyclesCount?: SortOrder
+  workTime?: SortOrder
+  breakTime?: SortOrder
+  status?: SortOrder
+  remainingTime?: SortOrder
+  currentCycle?: SortOrder
+  projectId?: SortOrder
+  createdAt?: SortOrder
+  updatedAt?: SortOrder,
+};
 
-export namespace Task {
-  export namespace Query {
-    export type Tasks = {
-      query?: string;
-      skip?: number;
-      after?: string;
-      before?: string;
-      first?: number;
-      last?: number;
-      orderBy?: TaskOrderByInput;
-    };
-  }
+type ConnectTaskToProject = {
+  connect: UniqueIdPayload;
+};
 
-  type Payload = {
-    title?: string;
-    cyclesCount?: number;
-    workTime?: number;
-    breakTime?: number;
-    status?: Status;
-    remainingTime?: number;
-    currentCycle?: number;
+export namespace TaskResolvers {
+  export type Tasks = {
+    query?: string;
+    skip?: number;
+    take?: number;
+    orderBy?: TaskOrderByInput;
+    projectId: Id;
   };
 
-  type ConnectTaskToProject = {
-    connect: UniqueIdPayload;
+  export type CreateTask = {
+    data: {
+      title: string;
+      cyclesCount: number;
+      workTime: number;
+      breakTime: number;
+      status: Status;
+      project: ConnectTaskToProject
+    };
   };
 
-  export namespace Mutation {
-    export type CreateTask = {
-      data: Required<Payload> & { project: ConnectTaskToProject };
+  export type UpdateTask = {
+    data: {
+      title?: string;
+      cyclesCount?: number;
+      workTime?: number;
+      breakTime?: number;
+      status?: Status;
+      remainingTime?: number;
+      currentCycle?: number;
     };
-
-    export type UpdateTask = {
-      data: Payload;
-      where: UniqueIdPayload;
-    };
-  }
+    where: UniqueIdPayload;
+  };
 }

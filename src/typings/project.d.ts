@@ -1,40 +1,41 @@
-import { Project, ProjectOrderByInput } from 'prisma-client';
+import { Project } from '@prisma/client';
 
-export type Project = Project;
+type ProjectOrderByInput = {
+  id?: SortOrder
+  title?: SortOrder
+  status?: SortOrder
+  note?: SortOrder
+  ownerId?: SortOrder
+  createdAt?: SortOrder
+  updatedAt?: SortOrder,
+};
 
-export namespace Project {
-  export namespace Query {
-    export type Projects = {
-      query?: string;
-      skip?: number;
-      after?: string;
-      before?: string;
-      first?: number;
-      last?: number;
-      orderBy?: ProjectOrderByInput;
+export namespace ProjectResolvers {
+  export type Projects = {
+    query?: string;
+    skip?: number;
+    take?: number;
+    orderBy?: ProjectOrderByInput;
+  };
+
+  export type ProjectsResponse = {
+    projects: Project[];
+    totalCount: number;
+  };
+
+  export type CreateProject = {
+    data: {
+      title: string;
+      status: Status;
     };
+  };
 
-    export type ProjectsResponse = {
-      projects: Project[];
-      totalCount: number;
+  export type UpdateProject = {
+    data: {
+      title?: string;
+      status?: Status;
+      note?: string;
     };
-  }
-
-  export namespace Mutation {
-    export type CreateProject = {
-      data: {
-        title: string;
-        status: Status;
-      };
-    };
-
-    export type UpdateProject = {
-      data: {
-        title?: string;
-        status?: Status;
-        note?: string;
-      };
-      where: UniqueIdPayload;
-    };
-  }
+    where: UniqueIdPayload;
+  };
 }
