@@ -1,4 +1,4 @@
-export const PASSWORD_MAX_LENGTH = 8;
+import { PASSWORD_MAX_LENGTH } from '../constants';
 
 export const isValidPassword = (password: string) => {
   if (password.length < PASSWORD_MAX_LENGTH) {

@@ -1,6 +1,7 @@
 import { TaskResolvers } from '@typings';
 import { Task } from '@prisma/client';
 
+import { Status } from '../../constants';
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
 import { validateProjectExistence } from '../validateProjectExistence';
 
@@ -10,7 +11,7 @@ export const Mutation = {
     getUserIdFromAuthorizationHeader(request);
     await validateProjectExistence(prisma)(id);
 
-    return prisma.task.create({ data: { ...args.data, currentCycle: 1, remainingTime: workTime } });
+    return prisma.task.create({ data: { ...args.data, currentCycle: 1, remainingTime: workTime, status: Status.TODO } });
   },
   updateTask: (_parent: unknown, args: TaskResolvers.UpdateTask, { prisma, request }: Context): Promise<Task> => {
     getUserIdFromAuthorizationHeader(request);

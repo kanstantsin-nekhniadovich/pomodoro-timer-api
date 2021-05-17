@@ -59,7 +59,6 @@ export const typeDefs = gql`
     cyclesCount: Int!
     workTime: Int!
     breakTime: Int!
-    status: Status!
     project: ConnectTaskToProject!
   }
 

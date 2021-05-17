@@ -7,7 +7,8 @@ import bcrypt from 'bcryptjs';
 import { hashPassword } from '../../utils/hashPassword';
 import { generateToken } from '../../utils/generateToken';
 import { isDefined } from '../../utils/isDefined';
-import { isValidPassword, PASSWORD_MAX_LENGTH } from '../../utils/isValidPassword';
+import { isValidPassword } from '../../utils/isValidPassword';
+import { PASSWORD_MAX_LENGTH } from '../../constants';
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
 
 export const Mutation = {
