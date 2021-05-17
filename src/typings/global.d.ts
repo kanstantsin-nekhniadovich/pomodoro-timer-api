@@ -15,17 +15,13 @@ declare global {
   };
 
   export type Status = 'TODO' | 'INPROGRESS' | 'COMPLETED';
+  export type SortOrder = 'asc' | 'desc';
 
   export type UniqueIdPayload = {
     id: Id;
   };
 
-  export const SortOrder: {
-    asc: 'asc',
-    desc: 'desc',
-  };
-
-  export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+  type NODE_ENV = 'development' | 'production';
 
   namespace NodeJS {
     interface ProcessEnv {
@@ -37,6 +33,7 @@ declare global {
       FIREBASE_PROJECT_ID: string;
       FIREBASE_PRIVATE_KEY: string;
       FIREBASE_CLIENT_EMAIL: string;
+      NODE_ENV: NODE_ENV;
     }
   }
 }

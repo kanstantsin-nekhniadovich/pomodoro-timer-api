@@ -5,6 +5,7 @@ import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
 import { typeDefs } from './schema.graphql';
 import { initializeFirebase } from './firebase';
+import { isDevelopment } from './utils/environment';
 
 initializeFirebase();
 
@@ -16,7 +17,7 @@ const server = new ApolloServer({
     prisma,
     request: req,
   }),
-  playground: true, // TODO: enable only on dev
+  playground: isDevelopment(),
 });
 
 const app = express();
