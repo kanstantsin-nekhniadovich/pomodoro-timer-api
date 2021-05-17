@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 import { hashPassword } from '../../utils/hashPassword';
 import { generateToken } from '../../utils/generateToken';
 import { isDefined } from '../../utils/isDefined';
-import { isValidPassword } from '../../utils/isValidPassword';
+import { isValidPassword, PASSWORD_MAX_LENGTH } from '../../utils/isValidPassword';
 import { getUserIdFromAuthorizationHeader } from '../../utils/getUserIdFromAuthorizationHeader';
 
 export const Mutation = {
@@ -21,7 +21,7 @@ export const Mutation = {
     }
 
     if (!isValidPassword(password)) {
-      throw new UserInputError('Password must be at least 8 characters length');
+      throw new UserInputError(`Password must be at least ${PASSWORD_MAX_LENGTH} characters length`);
     }
 
     const hashedPassword = await hashPassword(password);
@@ -85,7 +85,7 @@ export const Mutation = {
       if (isValidPassword(data.password)) {
         data.password = await hashPassword(data.password);
       } else {
-        throw new UserInputError('Password must be at least 8 characters length');
+        throw new UserInputError(`Password must be at least ${PASSWORD_MAX_LENGTH} characters length`);
       }
     }
 
