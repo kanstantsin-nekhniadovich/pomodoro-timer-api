@@ -25,8 +25,6 @@ declare global {
 
   namespace NodeJS {
     interface ProcessEnv {
-      PRISMA_ENDPOINT: string;
-      PRISMA_SECRET: string;
       JWT_SECRET: string;
       PORT: number;
       GRAPHQL_PATH: string;
