@@ -1,26 +1,25 @@
-import { Task } from '@typings';
+import { TaskResolvers } from '@typings';
+import { Task } from '@prisma/client';
+
 import { isDefined } from '../../utils/isDefined';
 
 export const Query = {
-  tasks: (_parent: unknown, args: Task.Query.Tasks, { prisma }: Context): Promise<Task[]> => {
-    const { query, skip, after, before, first, last, orderBy = 'createdAt_DESC' } = args;
-    const optArgs = { last, skip, first, after, before, orderBy };
+  tasks: (_parent: unknown, args: TaskResolvers.Tasks, { prisma }: Context): Promise<Task[]> => {
+    const { query, skip, take, orderBy = { createdAt: 'desc' }, projectId } = args;
+    const optArgs = { skip, take, orderBy };
+    const where = { project: { id: projectId } };
 
     if (isDefined(query)) {
-      Object.assign(optArgs, {
-        where: {
-          OR: [{
-            title_contains: query,
-          }, {
-            note_contains: query,
-          }],
+      Object.assign(where, {
+        title: {
+          contains: query,
         },
       });
     }
 
-    return prisma.tasks(optArgs);
+    return prisma.task.findMany({ where, ...optArgs });
   },
   task: (_parent: unknown, args: UniqueIdPayload, { prisma }: Context): Promise<Nullable<Task>> => {
-    return prisma.task({ id: args.id });
+    return prisma.task.findUnique({ where: { id: args.id } });
   },
 };

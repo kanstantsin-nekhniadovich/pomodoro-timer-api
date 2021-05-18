@@ -1,6 +1,4 @@
-import { User } from 'prisma-client';
-
-export type User = User;
+import { User } from '@prisma/client';
 
 export namespace Auth {
   export type Payload = {
@@ -15,31 +13,28 @@ export namespace Auth {
   };
 }
 
-export namespace User {
-  export namespace Mutation {
+export namespace UserResolvers {
+  export type CreateUser = {
+    data: {
+      email: string;
+      password: string;
+    },
+  };
 
-    export type CreateUser = {
-      data: {
-        email: string;
-        password: string;
-      },
-    };
+  export type CreateFacebookUser = {
+    data: {
+      email: string;
+      name: string;
+      avatarUrl: string;
+    },
+  };
 
-    export type CreateFacebookUser = {
-      data: {
-        email: string;
-        name: string;
-        avatarUrl: string;
-      },
-    };
-
-    export type UpdateUser = {
-      data: {
-        name?: string;
-        email?: string;
-        password?: string;
-        avatarUrl?: string;
-      },
-    };
-  }
+  export type UpdateUser = {
+    data: {
+      name?: string;
+      email?: string;
+      password?: string;
+      avatarUrl?: string;
+    },
+  };
 }
