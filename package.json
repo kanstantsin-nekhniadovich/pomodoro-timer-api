@@ -23,7 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^2.22.0",
-    "apollo-server-express": "^2.22.2",
+    "apollo-server-express": "^2.23.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.17.1",
