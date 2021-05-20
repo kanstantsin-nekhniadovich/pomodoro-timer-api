@@ -33,7 +33,6 @@ export namespace TaskResolvers {
       cyclesCount: number;
       workTime: number;
       breakTime: number;
-      status: Status;
       project: ConnectTaskToProject
     };
   };
