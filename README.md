@@ -5,8 +5,6 @@
 - set environmental variables, please see [Env](#Env) section
 - `npm run dev` - to start application
 
-After successfully running API you can run Heroes app:
-
 # Env
  - FACEBOOK_CLIENT_ID
  - FACEBOOK_CLIENT_SECRET
