@@ -23,7 +23,7 @@ export const typeDefs = gql`
     deleteTask(id: ID!): Task!
     createProject(data: CreateProjectInput!): CreateProjectResponse!
     updateProject(data: UpdateProjectInput!, where: UniqueIdInput!): Project!
-    deleteProject(id: ID!): Project!
+    deleteProject(id: ID!): DeleteProjectResponse!
   }
 
   input CreateUserInput {
@@ -147,6 +147,11 @@ export const typeDefs = gql`
 
   type ProjectsResponse {
     projects: [Project]!
+    totalCount: Int!
+  }
+
+  type DeleteProjectResponse {
+    project: Project!
     totalCount: Int!
   }
 
