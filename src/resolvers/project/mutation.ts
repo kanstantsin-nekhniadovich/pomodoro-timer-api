@@ -16,11 +16,18 @@ export const Mutation = {
 
     return prisma.project.update(args);
   },
-  deleteProject: async (_parent: unknown, args: UniqueIdPayload, { prisma, request }: Context): Promise<Project> => {
+  deleteProject: async (_parent: unknown, args: UniqueIdPayload, { prisma, request }: Context): Promise<ProjectResolvers.DeleteProject> => {
     const { id } = args;
-    getUserIdFromAuthorizationHeader(request);
+    const userId = getUserIdFromAuthorizationHeader(request);
     await validateProjectExistence(prisma)(id);
 
-    return prisma.project.delete({ where: args });
+    /* tslint:disable-next-line:await-promise */
+    const project = await prisma.project.delete({ where: args });
+    const totalCount = await prisma.project.count({ where: { owner: { id: userId } } });
+
+    return {
+      project,
+      totalCount,
+    };
   },
 };
