@@ -30,6 +30,11 @@ export namespace ProjectResolvers {
     };
   };
 
+  export type DeleteProject = {
+    project: Project;
+    totalCount: number;
+  };
+
   export type UpdateProject = {
     data: {
       title?: string;
